@@ -10,12 +10,14 @@ import {
   IonIcon,
   IonContent,
   IonMenuButton,
+  useIonViewWillEnter,
 } from '@ionic/react';
 import Notifications from './Notifications';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
 import { getHomeItems } from '../../store/selectors';
 import Store from '../../store';
+import {getNewsNodes, getThematique} from '../config/articles';
 
 const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
   <Card className="my-4 mx-auto">
@@ -37,7 +39,67 @@ const FeedCard = ({ title, type, text, author, authorAvatar, image }) => (
 const Feed = () => {
   const homeItems = Store.useState(getHomeItems);
   const [showNotifications, setShowNotifications] = useState(false);
+  const [items, setItems] = useState([]);
+  const [selectedYear, setSelectedYear] = useState('all');
+  const [selectedTerm, setSelectedTerm] = useState('all');
+  const [offset, setOffset] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [pageNumber, setPageNumber] = useState(0);
+  const [hasMore, setHasMore] = useState(true);
+  const [currentLanguage, setCurrentLanguage] = useState('fr');
+  const [filters, setFilters] = useState([
+    {
+      id: 'all',
+      name: 'Toutes',
+    },
+  ]);
 
+  useIonViewWillEnter(() => {
+    getThematique(currentLanguage)
+      .then(data => {
+        const terms = data.data.map(el => {
+          return {
+            ...el,
+            id: el.drupal_internal__tid,
+          };
+        });
+        setFilters(filters => [].concat(filters, terms));
+        console.log(filters);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  }, []);
+
+
+  const fetchData = () => {
+    setIsLoading(true);
+    getNewsNodes(currentLanguage, selectedTerm, selectedYear, offset)
+      .then(res => {
+        let nodes = res.data.map(el => {
+          const alias = '/' + currentLanguage + el.path.alias;
+          return {
+            ...el,
+            path: {
+              ...el.path,
+              alias: alias,
+            },
+          };
+        });
+        setItems(items => [].concat(items, nodes));
+        setHasMore(!!res.links.next);
+        setIsLoading(false);
+        console.log(items);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+  useEffect(() => {
+    setIsLoading(true);
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTerm, offset, selectedYear]);
   return (
     <IonPage>
       <IonHeader>

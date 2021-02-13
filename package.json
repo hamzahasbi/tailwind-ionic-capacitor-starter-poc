@@ -18,12 +18,15 @@
     "autoprefixer": "^10.1.0",
     "capacitor-dark-mode": "^1.0.5",
     "classnames": "^2.2.6",
+    "dayjs": "^1.10.4",
+    "kitsu": "^10.0.0-alpha.10",
     "next": "10.0.3",
     "postcss": "^8.2.1",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-router-dom": "^5.2.0",
     "react-virtuoso": "^1.1.1",
+    "sanitize-html": "^2.3.2",
     "tailwindcss": "^2.0.2"
   },
   "devDependencies": {
