@@ -20,7 +20,6 @@ import Store from '../../store';
 import {getNewsNodes, getThematique} from '../config/articles';
 
 const FeedCard = ({ title, category, excerpt, author, authorAvatar, image, ...rest }) => {
-  console.log(rest);
   return (
     <Card className="my-4 mx-auto">
       <div>
@@ -30,10 +29,10 @@ const FeedCard = ({ title, category, excerpt, author, authorAvatar, image, ...re
         <h4 className="font-bold py-0 text-s text-gray-400 dark:text-gray-500 uppercase">{category}</h4>
         <h2 className="font-bold text-2xl text-gray-800 dark:text-gray-100">{title}</h2>
         <p className="sm:text-sm text-s text-gray-500 mr-1 my-3 dark:text-gray-400">{excerpt}</p>
-        <div className="flex items-center space-x-4">
+        {/* <div className="flex items-center space-x-4">
           <img src={authorAvatar} className="rounded-full w-10 h-10" />
           <h3 className="text-gray-500 dark:text-gray-200 m-l-8 text-sm font-medium">{author}</h3>
-        </div>
+        </div> */}
       </div>
     </Card>
   );
@@ -78,17 +77,9 @@ const Feed = () => {
     setIsLoading(true);
     getNewsNodes(currentLanguage, selectedTerm, offset)
       .then(res => {
-        let nodes = res.data.map(el => {
-          const alias = '/' + currentLanguage + el.path.alias;
-          return {
-            ...el,
-            path: {
-              ...el.path,
-              alias: alias,
-            },
-          };
-        });
-        setItems(items => [].concat(items, nodes));
+        console.log(res);
+        let nodes = normalizer(res.data);
+        setItems(olditems => [].concat(olditems, nodes));
         setHasMore(!!res.links.next);
         setIsLoading(false);
         console.log(items);
@@ -124,10 +115,9 @@ const Feed = () => {
           </IonToolbar>
         </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        {items.length && 
-          normalizer(items).map((item, i) => (
-            <FeedCard {...item} key={item.id} />)
-        )}
+        {items.length > 0 && 
+          items.map((item) => <FeedCard {...item} key={item.id} />)
+        }
       </IonContent>
     </IonPage>
   );

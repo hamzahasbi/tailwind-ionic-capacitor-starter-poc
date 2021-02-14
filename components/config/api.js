@@ -128,6 +128,7 @@ export function initFactoryAPI() {
 
         // Make call.
         Api.setEndpoint(endpoint)
+        console.log(params);
         return Api.get(resource, params)
     }
 

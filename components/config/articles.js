@@ -2,6 +2,7 @@ import FactoryAPI, { initFactoryAPI } from './api';
 import get from 'lodash.get';
 import truncate from "truncate";
 import {stripHtml} from "string-strip-html";
+
 initFactoryAPI();
 
 export const getThematique = language => {
@@ -36,25 +37,20 @@ export const getNewsNodes = (language, selectedTerm, offset) => {
     categoryFilter = {};
   }
 
-
   return FactoryAPI.getResourcesV2(endpointUrl, 'node/vactory_news', {
     page: {
-      limit: 10,
-      offset: offset,
+      limit: 9,
+      offset: 0,
     },
-    sort: '-created',
-    // do not use filter param directly.
-    // bypass paramsSerializer
-    // https://www.npmjs.com/package/qs
     ...categoryFilter,
+    sort: "-created",
     fields: {
-      'node--vactory_news':
-        'drupal_internal__nid,langcode,title,path,created,field_vactory_excerpt,field_vactory_media,field_vactory_taxonomy_1',
+        "node--vactory_news": "drupal_internal__nid,langcode,title,path,created,field_vactory_excerpt,field_vactory_media_image,field_vactory_taxonomy_1,field_vactory_date",
         "media--image": "thumbnail",
         "file--image": "uri",
         "taxonomy_term--vactory_news_theme": "name",
     },
-    include: "field_vactory_media_image,field_vactory_media_image.thumbnail,field_vactory_taxonomy_1,field_vactory_paragraphs",
+    include: "field_vactory_media_image,field_vactory_media_image.thumbnail,field_vactory_taxonomy_1",
   });
 };
 
@@ -77,7 +73,7 @@ export const getNewsById = (id, language) => {
       "node--vactory_news": "drupal_internal__nid,langcode,title,path,metatag_normalized,created,field_vactory_excerpt,field_vactory_media_image,field_vactory_taxonomy_1,body,field_vactory_date,field_vactory_paragraphs,internal_node_banner,node_settings",
       "media--image": "thumbnail",
       "file--image": "uri",
-      "taxonomy_term--vactory_news_theme": "name",
+      "taxonomy_term--vactory_news_theme": "name,id",
     },
     include: "field_vactory_media_image,field_vactory_media_image.thumbnail,field_vactory_taxonomy_1,field_vactory_paragraphs",
   });
@@ -85,12 +81,15 @@ export const getNewsById = (id, language) => {
 
 
 export const normalizer = (nodes) => {
-  return nodes.map(post => ({
-      id: post.drupal_internal__nid,
-      title: post.title,
-      url: get(post, 'path.alias', '#.'),
-      excerpt: truncate(stripHtml(get(post, 'field_vactory_excerpt.processed', '')), 100),
-      category: get(post, 'field_vactory_taxonomy_1.name', null),
-      image: get(post, 'field_vactory_media_image.thumbnail.uri.value', null)
+  console.log(nodes[0]);
+  const processed = nodes.map(post => ({
+    id: post.drupal_internal__nid,
+    title: post.title,
+    url: get(post, 'path.alias', '#.'),
+    excerpt: truncate(stripHtml(get(post, 'field_vactory_excerpt.processed', '')).result, 100),
+    category: get(post, 'field_vactory_taxonomy_1.name', null),
+    image: get(post, 'field_vactory_media_image.thumbnail.uri.value', null),
+    date: get(post, 'field_vactory_date', null)
   }));
+  return processed;
 };
