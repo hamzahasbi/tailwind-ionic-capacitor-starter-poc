@@ -81,7 +81,7 @@
   dependencies:
     regenerator-runtime "^0.13.4"
 
-"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1":
+"@babel/runtime@^7.1.2", "@babel/runtime@^7.12.1", "@babel/runtime@^7.12.13":
   version "7.12.13"
   resolved "https://registry.npm.taobao.org/@babel/runtime/download/@babel/runtime-7.12.13.tgz#0a21452352b02542db0ffb928ac2d3ca7cb6d66d"
   integrity sha1-CiFFI1KwJULbD/uSisLTyny21m0=
@@ -2202,6 +2202,11 @@ hoist-non-react-statics@^3.1.0:
   dependencies:
     react-is "^16.7.0"
 
+html-entities@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/html-entities/download/html-entities-2.1.0.tgz?cache=0&sync_timestamp=1611788344321&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fhtml-entities%2Fdownload%2Fhtml-entities-2.1.0.tgz#f5de1f8d5e1f16859a74aa73a90f0db502ca723a"
+  integrity sha1-9d4fjV4fFoWadKpzqQ8NtQLKcjo=
+
 html-tags@^3.1.0:
   version "3.1.0"
   resolved "https://registry.npm.taobao.org/html-tags/download/html-tags-3.1.0.tgz#7b5e6f7e665e9fb41f30007ed9e0d41e97fb2140"
@@ -2692,6 +2697,21 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash.clonedeep@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.npm.taobao.org/lodash.clonedeep/download/lodash.clonedeep-4.5.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Flodash.clonedeep%2Fdownload%2Flodash.clonedeep-4.5.0.tgz#e23f3f9c4f8fbdde872529c1071857a086e5ccef"
+  integrity sha1-4j8/nE+Pvd6HJSnBBxhXoIblzO8=
+
+lodash.get@^4.4.2:
+  version "4.4.2"
+  resolved "https://registry.npm.taobao.org/lodash.get/download/lodash.get-4.4.2.tgz#2d177f652fa31e939b4438d5341499dfa3825e99"
+  integrity sha1-LRd/ZS+jHpObRDjVNBSZ36OCXpk=
+
+lodash.isplainobject@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.npm.taobao.org/lodash.isplainobject/download/lodash.isplainobject-4.0.6.tgz#7c526a52d89b45c45cc690b88163be0497f550cb"
+  integrity sha1-fFJqUtibRcRcxpC4gWO+BJf1UMs=
+
 lodash.sortby@^4.7.0:
   version "4.7.0"
   resolved "https://registry.npm.taobao.org/lodash.sortby/download/lodash.sortby-4.7.0.tgz#edd14c824e2cc9c1e0b0a1b42bb5210516a42438"
@@ -2701,6 +2721,16 @@ lodash.toarray@^4.4.0:
   version "4.4.0"
   resolved "https://registry.npm.taobao.org/lodash.toarray/download/lodash.toarray-4.4.0.tgz#24c4bfcd6b2fba38bfd0594db1179d8e9b656561"
   integrity sha1-JMS/zWsvuji/0FlNsRedjptlZWE=
+
+lodash.trim@^4.5.1:
+  version "4.5.1"
+  resolved "https://registry.npm.taobao.org/lodash.trim/download/lodash.trim-4.5.1.tgz#36425e7ee90be4aa5e27bcebb85b7d11ea47aa57"
+  integrity sha1-NkJefukL5KpeJ7zruFt9EepHqlc=
+
+lodash.without@^4.4.0:
+  version "4.4.0"
+  resolved "https://registry.npm.taobao.org/lodash.without/download/lodash.without-4.4.0.tgz#3cd4574a00b67bae373a94b748772640507b7aac"
+  integrity sha1-PNRXSgC2e643OpS3SHcmQFB7eqw=
 
 lodash@^4.17.11, lodash@^4.17.13, lodash@^4.17.20:
   version "4.17.20"
@@ -3709,6 +3739,40 @@ randomfill@^1.0.3:
     randombytes "^2.0.5"
     safe-buffer "^5.1.0"
 
+ranges-apply@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npm.taobao.org/ranges-apply/download/ranges-apply-5.0.4.tgz#ffc320a3c649dc38d50f055489d5f15bef3e91e3"
+  integrity sha1-/8Mgo8ZJ3DjVDwVUidXxW+8+keM=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+    ranges-merge "^7.0.4"
+
+ranges-merge@^7.0.4:
+  version "7.0.4"
+  resolved "https://registry.npm.taobao.org/ranges-merge/download/ranges-merge-7.0.4.tgz#3e873c447b4d7baf661edbcd3ca2a53a80e02a77"
+  integrity sha1-Poc8RHtNe69mHtvNPKKlOoDgKnc=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+    ranges-push "^5.0.4"
+    ranges-sort "^4.0.4"
+
+ranges-push@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npm.taobao.org/ranges-push/download/ranges-push-5.0.4.tgz#459cb490209325a3f4686e673ccc1bcf7d51e00b"
+  integrity sha1-RZy0kCCTJaP0aG5nPMwbz31R4As=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+    ranges-merge "^7.0.4"
+    string-collapse-leading-whitespace "^5.0.4"
+    string-trim-spaces-only "^3.0.4"
+
+ranges-sort@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npm.taobao.org/ranges-sort/download/ranges-sort-4.0.4.tgz#5b72c1723e5d26227324ab04ca0168b2df16d9ee"
+  integrity sha1-W3LBcj5dJiJzJKsEygFost8W2e4=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+
 raw-body@2.4.1:
   version "2.4.1"
   resolved "https://registry.npm.taobao.org/raw-body/download/raw-body-2.4.1.tgz#30ac82f98bb5ae8c152e67149dac8d55153b168c"
@@ -4348,10 +4412,47 @@ stream-shift@^1.0.0:
   resolved "https://registry.npm.taobao.org/stream-shift/download/stream-shift-1.0.1.tgz#d7088281559ab2778424279b0877da3c392d5a3d"
   integrity sha1-1wiCgVWasneEJCebCHfaPDktWj0=
 
+string-collapse-leading-whitespace@^5.0.4:
+  version "5.0.4"
+  resolved "https://registry.npm.taobao.org/string-collapse-leading-whitespace/download/string-collapse-leading-whitespace-5.0.4.tgz#217c2ebcd9aa9fcc1341f9e8bb6bf4276853ce9d"
+  integrity sha1-IXwuvNmqn8wTQfnou2v0J2hTzp0=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+
 string-hash@1.1.3:
   version "1.1.3"
   resolved "https://registry.npm.taobao.org/string-hash/download/string-hash-1.1.3.tgz#e8aafc0ac1855b4666929ed7dd1275df5d6c811b"
   integrity sha1-6Kr8CsGFW0Zmkp7X3RJ1311sgRs=
+
+string-left-right@^4.0.4:
+  version "4.0.4"
+  resolved "https://registry.npm.taobao.org/string-left-right/download/string-left-right-4.0.4.tgz#541de721d433e97045d0e5abf0c0dc8365644af3"
+  integrity sha1-VB3nIdQz6XBF0OWr8MDcg2VkSvM=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+    lodash.clonedeep "^4.5.0"
+    lodash.isplainobject "^4.0.6"
+
+string-strip-html@^8.2.1:
+  version "8.2.1"
+  resolved "https://registry.npm.taobao.org/string-strip-html/download/string-strip-html-8.2.1.tgz#bc5a0135b385224af31386aeb9bfe5359c0fffbf"
+  integrity sha1-vFoBNbOFIkrzE4auub/lNZwP/78=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
+    html-entities "^2.1.0"
+    lodash.isplainobject "^4.0.6"
+    lodash.trim "^4.5.1"
+    lodash.without "^4.4.0"
+    ranges-apply "^5.0.4"
+    ranges-push "^5.0.4"
+    string-left-right "^4.0.4"
+
+string-trim-spaces-only@^3.0.4:
+  version "3.0.4"
+  resolved "https://registry.npm.taobao.org/string-trim-spaces-only/download/string-trim-spaces-only-3.0.4.tgz#c707f1bfc368ae3ef67a45fd35c3021c2688b343"
+  integrity sha1-xwfxv8Norj72ekX9NcMCHCaIs0M=
+  dependencies:
+    "@babel/runtime" "^7.12.13"
 
 string-width@^1.0.1:
   version "1.0.2"
@@ -4650,6 +4751,11 @@ traverse@0.6.6:
   version "0.6.6"
   resolved "https://registry.npm.taobao.org/traverse/download/traverse-0.6.6.tgz#cbdf560fd7b9af632502fed40f918c157ea97137"
   integrity sha1-y99WD9e5r2MlAv7UD5GMFX6pcTc=
+
+truncate@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.npm.taobao.org/truncate/download/truncate-2.1.0.tgz#391183563a25cffbd4d613a1d00ae5844c9e55d3"
+  integrity sha1-ORGDVjolz/vU1hOh0ArlhEyeVdM=
 
 ts-pnp@^1.1.6:
   version "1.2.0"

@@ -1,8 +1,8 @@
 import FactoryAPI, { initFactoryAPI } from './api';
-import dayjs from 'dayjs';
-
+import get from 'lodash.get';
+import truncate from "truncate";
+import {stripHtml} from "string-strip-html";
 initFactoryAPI();
-
 
 export const getThematique = language => {
   const endpointUrl = FactoryAPI.getEndpoints().find(locale => {
@@ -19,7 +19,7 @@ export const getThematique = language => {
     },
   );
 };
-export const getNewsNodes = (language, selectedTerm, selectedYear, offset) => {
+export const getNewsNodes = (language, selectedTerm, offset) => {
   // need to passe local to every page too.
   const endpointUrl = FactoryAPI.getEndpoints().find(locale => {
     return locale.locale === language;
@@ -36,19 +36,6 @@ export const getNewsNodes = (language, selectedTerm, selectedYear, offset) => {
     categoryFilter = {};
   }
 
-  let dateFilter = {};
-  if (selectedYear !== 'all') {
-    dateFilter = {
-      'filter[datestart][condition][path]': 'created',
-      'filter[datestart][condition][operator]': '>=',
-      'filter[datestart][condition][value]': dayjs([selectedYear]).unix(),
-      'filter[dateend][condition][path]': 'created',
-      'filter[dateend][condition][operator]': '<=',
-      'filter[dateend][condition][value]': dayjs([selectedYear])
-        .add(12, 'months')
-        .unix(),
-    };
-  }
 
   return FactoryAPI.getResourcesV2(endpointUrl, 'node/vactory_news', {
     page: {
@@ -60,15 +47,14 @@ export const getNewsNodes = (language, selectedTerm, selectedYear, offset) => {
     // bypass paramsSerializer
     // https://www.npmjs.com/package/qs
     ...categoryFilter,
-    ...dateFilter,
     fields: {
       'node--vactory_news':
-        'drupal_internal__nid,langcode,title,path,created,field_vactory_excerpt,field_vactory_media,field_vactory_news_theme',
-      'file--image': 'uri',
-      'taxonomy_term--vactory_news_theme': 'name',
+        'drupal_internal__nid,langcode,title,path,created,field_vactory_excerpt,field_vactory_media,field_vactory_taxonomy_1',
+        "media--image": "thumbnail",
+        "file--image": "uri",
+        "taxonomy_term--vactory_news_theme": "name",
     },
-    include:
-      'field_vactory_media,field_vactory_media.thumbnail,field_vactory_news_theme',
+    include: "field_vactory_media_image,field_vactory_media_image.thumbnail,field_vactory_taxonomy_1,field_vactory_paragraphs",
   });
 };
 
@@ -88,12 +74,23 @@ export const getNewsById = (id, language) => {
     // https://www.npmjs.com/package/qs
     ...filterId,
     fields: {
-      'node--vactory_news':
-        'drupal_internal__nid,langcode,title,path,metatag_normalized,created,field_vactory_excerpt,field_vactory_media,field_vactory_news_theme,body,node_banner_image,node_banner_mobile_image,node_banner_title,node_banner_icon,node_banner_hide_title,node_banner_hide_icon,field_contenu_lie,node_parallax,node_class',
-      'file--image': 'uri',
-      'taxonomy_term--vactory_news_theme': 'name',
+      "node--vactory_news": "drupal_internal__nid,langcode,title,path,metatag_normalized,created,field_vactory_excerpt,field_vactory_media_image,field_vactory_taxonomy_1,body,field_vactory_date,field_vactory_paragraphs,internal_node_banner,node_settings",
+      "media--image": "thumbnail",
+      "file--image": "uri",
+      "taxonomy_term--vactory_news_theme": "name",
     },
-    include:
-      'field_vactory_media,field_vactory_media.thumbnail,field_vactory_news_theme,node_banner_image,node_banner_mobile_image,node_banner_image.thumbnail,node_banner_mobile_image.thumbnail',
+    include: "field_vactory_media_image,field_vactory_media_image.thumbnail,field_vactory_taxonomy_1,field_vactory_paragraphs",
   });
+};
+
+
+export const normalizer = (nodes) => {
+  return nodes.map(post => ({
+      id: post.drupal_internal__nid,
+      title: post.title,
+      url: get(post, 'path.alias', '#.'),
+      excerpt: truncate(stripHtml(get(post, 'field_vactory_excerpt.processed', '')), 100),
+      category: get(post, 'field_vactory_taxonomy_1.name', null),
+      image: get(post, 'field_vactory_media_image.thumbnail.uri.value', null)
+  }));
 };
