@@ -5,7 +5,6 @@ import {IonLoading} from "@ionic/react";
 const Loader =  ({callback, isOpen, message}) => {
     return (
         <IonLoading
-            cssClass='custom-loader'
             isOpen={isOpen}
             onDidDismiss={callback}
             translucent={true}

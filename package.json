@@ -23,6 +23,7 @@
     "lodash.get": "^4.4.2",
     "next": "10.0.3",
     "postcss": "^8.2.1",
+    "qs": "^6.9.6",
     "react": "17.0.1",
     "react-dom": "17.0.1",
     "react-router-dom": "^5.2.0",

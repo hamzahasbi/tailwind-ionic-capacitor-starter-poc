@@ -1,38 +1,13 @@
 import Kitsu from "kitsu";
 import https from "https";
+import {GlobalConfig} from './GlobalConfig';
 
-const GlobalConfig = {
-    frontendURL: `http://localhost:3000/`,
-    backendURL: 'https://backend.void.fr/',
-    languages: {
-      defaultLanguage: 'fr',
-      languages: ['fr', 'ar'],
-      locales: ['fr-FR', 'ar-MA'],
-      languageLabels: [
-        {
-          code: 'fr',
-          label: 'Français',
-        },
-        {
-          code: 'ar',
-          label: 'العربية',
-        },
-      ],
-      languageIcon: {
-        'fr-FR': '🇧🇷',
-        'en-US': '🇺🇸',
-      },
-    },
-    api: {
-      authorization: null,
-    },
-  };
 let FactoryAPI
 
 export function initFactoryAPI() {
     if (FactoryAPI) return
 
-    const { backendURL, api: { authorization }, languages: { languages } } = GlobalConfig
+    const { backendURL, api: { authorization }, languages: { languages } } = GlobalConfig;
 
     const Api = new Kitsu({
         camelCaseTypes: false,
@@ -128,7 +103,6 @@ export function initFactoryAPI() {
 
         // Make call.
         Api.setEndpoint(endpoint)
-        console.log(params);
         return Api.get(resource, params)
     }
 
@@ -139,6 +113,19 @@ export function initFactoryAPI() {
         }
     }))
 
+    /**
+     * Enable debug.
+     */
+    Api.enableDebug = () => {
+        Api.axios.interceptors.request.use(config => {
+            console.log(config);
+            // Do something before request is sent
+            return config
+        }, error => {
+            // Do something with request error
+            return Promise.reject(error)
+        })
+    };
     FactoryAPI = Api
 }
 

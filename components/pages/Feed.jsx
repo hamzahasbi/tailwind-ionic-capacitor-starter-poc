@@ -18,6 +18,10 @@ import { notificationsOutline } from 'ionicons/icons';
 import { getHomeItems } from '../../store/selectors';
 import Store from '../../store';
 import {getNewsNodes, getThematique} from '../config/articles';
+import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
+import Loader from '../Loader/Loader';
+import {SelectFilters} from '../Filters/select';
+
 
 const FeedCard = ({ title, category, excerpt, author, authorAvatar, image, ...rest }) => {
   return (
@@ -55,6 +59,19 @@ const Feed = () => {
     },
   ]);
 
+  const handleScroll = () => {
+    const selected = pageNumber + 1;
+    const newOffset = Math.ceil(selected * 10);
+    setPageNumber(selected);
+    setOffset(newOffset);
+  }
+
+  const handleChange = (tid) => {
+    setItems([]);
+    setOffset(0);
+    setPageNumber(0);
+    setSelectedTerm(tid);
+  }
   useIonViewWillEnter(() => {
     getThematique(currentLanguage)
       .then(data => {
@@ -65,7 +82,6 @@ const Feed = () => {
           };
         });
         setFilters(filters => [].concat(filters, terms));
-        console.log(filters);
       })
       .catch(e => {
         console.log(e);
@@ -77,12 +93,10 @@ const Feed = () => {
     setIsLoading(true);
     getNewsNodes(currentLanguage, selectedTerm, offset)
       .then(res => {
-        console.log(res);
         let nodes = normalizer(res.data);
         setItems(olditems => [].concat(olditems, nodes));
         setHasMore(!!res.links.next);
         setIsLoading(false);
-        console.log(items);
       })
       .catch(e => {
         console.log(e);
@@ -115,9 +129,19 @@ const Feed = () => {
           </IonToolbar>
         </IonHeader>
         <Notifications open={showNotifications} onDidDismiss={() => setShowNotifications(false)} />
-        {items.length > 0 && 
-          items.map((item) => <FeedCard {...item} key={item.id} />)
+        <SelectFilters filters={filters} selectedTerm={selectedTerm} handleChange={handleChange}/>
+
+        {isLoading  &&
+          <Loader
+            callback={() => setIsLoading(false)}
+            isOpen={isLoading}
+            message={'Chargement...'}
+          />
         }
+        {items.length > 0 && 
+          items.map((item, i) => <FeedCard {...item} key={i} />)
+        }
+        <InfiniteScroll disabled={!hasMore} callback={handleScroll} loadingText={"Loading...."}/>
       </IonContent>
     </IonPage>
   );
