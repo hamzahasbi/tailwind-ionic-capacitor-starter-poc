@@ -2,7 +2,6 @@ import FactoryAPI, { initFactoryAPI } from './api';
 import get from 'lodash.get';
 import truncate from "truncate";
 import {stripHtml} from "string-strip-html";
-import * as qs from 'qs';
 
 initFactoryAPI();
 
@@ -51,7 +50,7 @@ export const getNewsNodes = async (language, selectedTerm, offset) => {
       ...categoryFilter,
       sort: "-created",
       fields: {
-          "node--vactory_news": "drupal_internal__nid,langcode,title,path,created,field_vactory_excerpt,field_vactory_media_image,field_vactory_taxonomy_1,field_vactory_date",
+          "node--vactory_news": "drupal_internal__nid,body,langcode,title,path,created,field_vactory_excerpt,field_vactory_media_image,field_vactory_taxonomy_1,field_vactory_date",
           "media--image": "thumbnail",
           "file--image": "uri",
           "taxonomy_term--vactory_news_theme": "name",
@@ -97,7 +96,11 @@ export const normalizer = (nodes) => {
     excerpt: truncate(stripHtml(get(post, 'field_vactory_excerpt.processed', '')).result, 100),
     category: get(post, 'field_vactory_taxonomy_1.data[0].name', null),
     image: get(post, 'field_vactory_media_image.data.thumbnail.data.uri.value._default', null),
-    date: get(post, 'field_vactory_date', null)
+    date: get(post, 'field_vactory_date', null),
+    author: "VOID",
+    logo: '/img/icon-void.png',
+    langcode: get(post, 'langcode', 'fr'),
+    body: get(post, 'body.processed', null) ?? get(post, 'field_vactory_excerpt.processed', '')
   }));
   return processed;
 };

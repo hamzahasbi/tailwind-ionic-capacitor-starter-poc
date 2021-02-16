@@ -15,15 +15,13 @@ import {
 import Notifications from './Notifications';
 import { useState, useEffect } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
-import { getHomeItems } from '../../store/selectors';
-import Store from '../../store';
 import {getNewsNodes, getThematique} from '../config/articles';
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
 import Loader from '../Loader/Loader';
 import {SelectFilters} from '../Filters/select';
 
 
-const FeedCard = ({ title, category, excerpt, author, authorAvatar, image, ...rest }) => {
+const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id }) => {
   return (
     <Card className="my-4 mx-auto">
       <div>
@@ -32,18 +30,23 @@ const FeedCard = ({ title, category, excerpt, author, authorAvatar, image, ...re
       <div className="px-4 py-4 bg-white rounded-b-xl dark:bg-gray-900">
         <h4 className="font-bold py-0 text-s text-gray-400 dark:text-gray-500 uppercase">{category}</h4>
         <h2 className="font-bold text-2xl text-gray-800 dark:text-gray-100">{title}</h2>
-        <p className="sm:text-sm text-s text-gray-500 mr-1 my-3 dark:text-gray-400">{excerpt}</p>
-        {/* <div className="flex items-center space-x-4">
-          <img src={authorAvatar} className="rounded-full w-10 h-10" />
+        <p className="sm:text-sm text-s text-gray-500 mr-1 my-3 dark:text-gray-400">
+          {excerpt}
+        </p>
+
+        <div className="flex items-center justify-between mt-2 mx-6">
+          <a href={`/${langcode}/news/${id}`} className="text-blue-500 text-s ml-20 my-1">{'Lire plus'}</a>
+        </div>
+        <div className="flex items-center space-x-4">
+          <img src={logo} className="rounded-full w-10 h-10" />
           <h3 className="text-gray-500 dark:text-gray-200 m-l-8 text-sm font-medium">{author}</h3>
-        </div> */}
+        </div>
       </div>
     </Card>
   );
 };
 
 const Feed = () => {
-  const homeItems = Store.useState(getHomeItems);
   const [showNotifications, setShowNotifications] = useState(false);
   const [items, setItems] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('all');
