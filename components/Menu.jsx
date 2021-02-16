@@ -70,8 +70,8 @@ const Menu = () => {
       </IonHeader>
       <IonContent>
         <IonList>
-          {pages.map(p => (
-            <IonMenuToggle autoHide={false}>
+          {pages.map((p, index) => (
+            <IonMenuToggle key={index} autoHide={false}>
               <IonItem routerLink={p.url} routerDirection="none" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />
                 <IonLabel>{p.title}</IonLabel>
