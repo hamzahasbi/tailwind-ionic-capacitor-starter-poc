@@ -44,7 +44,7 @@ export const getNewsNodes = async (language, selectedTerm, offset) => {
     params: 
     {
       page: {
-        limit: 9,
+        limit: 4,
         offset
       },
       ...categoryFilter,
@@ -98,7 +98,7 @@ export const normalizer = (nodes) => {
     image: get(post, 'field_vactory_media_image.data.thumbnail.data.uri.value._default', null),
     date: get(post, 'field_vactory_date', null),
     author: "VOID",
-    logo: '/img/icon-void.png',
+    logo: '/img/icon.png',
     langcode: get(post, 'langcode', 'fr'),
     body: get(post, 'body.processed', null) ?? get(post, 'field_vactory_excerpt.processed', '')
   }));

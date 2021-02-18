@@ -11,6 +11,7 @@ import {
   IonRouterContext,
   IonTitle,
   IonToolbar,
+  IonToggle
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
 import { cog, flash, list } from 'ionicons/icons';
@@ -39,8 +40,9 @@ const Menu = () => {
 
   const ionRouterContext = useContext(IonRouterContext);
   const location = useLocation();
+  const prefersDark = window?.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(prefersDark);
 
   const handleOpen = async () => {
     try {
@@ -58,8 +60,8 @@ const Menu = () => {
   };
 
   useEffect(() => {
-    setIsDark(window.matchMedia('(prefers-color-scheme: dark)').matches);
-  }, []);
+    document.body.classList.toggle('dark', isDark);
+  }, [isDark]);
 
   return (
     <IonMenu side="start" contentId="main" onIonDidOpen={handleOpen} onIonDidClose={handleClose}>
@@ -78,6 +80,17 @@ const Menu = () => {
               </IonItem>
             </IonMenuToggle>
           ))}
+          <IonItem lines="none">
+            <IonToggle
+              checked={isDark}
+              onIonChange={e => {
+                setIsDark(!isDark)
+              }}
+              slot='start'
+            />  
+            <IonLabel slot="start" name="moon"> Dark Mode</IonLabel>
+          
+          </IonItem>            
         </IonList>
       </IonContent>
     </IonMenu>

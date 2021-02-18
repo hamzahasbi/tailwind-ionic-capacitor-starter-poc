@@ -25,7 +25,7 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
   return (
     <Card className="my-4 mx-auto">
       <div>
-        <img className="rounded-t-xl h-32 w-full object-cover" src={image} />
+        <img loading="lazy" className="rounded-t-xl h-32 w-full object-cover" src={image} />
       </div>
       <div className="px-4 py-4 bg-white rounded-b-xl dark:bg-gray-900">
         <h4 className="font-bold py-0 text-s text-gray-400 dark:text-gray-500 uppercase">{category}</h4>
@@ -64,7 +64,7 @@ const Feed = () => {
 
   const handleScroll = () => {
     const selected = pageNumber + 1;
-    const newOffset = Math.ceil(selected * 10);
+    const newOffset = Math.ceil(selected * 4);
     setPageNumber(selected);
     setOffset(newOffset);
   }
