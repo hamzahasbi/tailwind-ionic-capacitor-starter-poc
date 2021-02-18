@@ -11,19 +11,21 @@ import '@ionic/react/css/display.css';
 
 import '../styles/global.css';
 import '../styles/variables.css';
-
+import {FirebaseContext, Firebase} from '../components/config/firebase';
 function MyApp({ Component, pageProps }) {
+  // console.log(Firebase);
   return (
-    <>
-      <Head>
-        <meta
-          name="viewport"
-          content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-        ></meta>
-        <script src="https://unpkg.com/ionicons@5.2.3/dist/ionicons.js"></script>
-      </Head>
-      <Component {...pageProps} />
-    </>
+    <FirebaseContext.Provider value={Firebase}>
+        <Head>
+          <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
+          <meta name="color-scheme" content="light dark" />
+          <script type="module" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.esm.js"/>
+          <script noModule="" src="https://unpkg.com/ionicons@5.2.3/dist/ionicons/ionicons.js"/>
+        </Head>
+        <Component {...pageProps} />
+    </FirebaseContext.Provider>
   );
 }
 
