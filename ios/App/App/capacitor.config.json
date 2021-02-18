@@ -1,8 +1,8 @@
 {
   "appId": "com.example.app",
-  "appName": "nextjs-tailwind-capacitor",
+  "appName": "void-insights",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "webDir": "out",
   "plugins": {
     "SplashScreen": {
