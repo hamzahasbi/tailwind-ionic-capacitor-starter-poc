@@ -6,7 +6,7 @@ export const Article = ({title, author, body, category, logo, date, image}) => {
         <div className="mx-auto px-4 py-4 max-w-xl my-4">
             <div className="bg-white shadow-2xl rounded-lg mb-6 tracking-wide" >
                 <div className="md:flex-shrink-0">
-                    <img src={image} alt="mountains" className="w-full h-64 rounded-lg rounded-b-none"/>
+                    <img loading='lazy' src={image} alt="mountains" className="w-full h-64 rounded-lg rounded-b-none"/>
                     <div className="flex items-center justify-between py-1 px-3 bg-gray-400" >
                         <h6 className='bg-gray-800 text-xs text-white px-2 py-1 font-semibold rounded uppercase hover:bg-gray-700'>{category}</h6>
                     </div>
