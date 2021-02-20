@@ -3,8 +3,8 @@ import { IonApp, IonRouterOutlet, IonSplitPane } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { Redirect, Route } from 'react-router-dom';
 import Menu from './Menu';
-import Details from './pages/Details';
 import Tabs from './pages/Tabs';
+import Home from './pages/Home';
 
 const AppShell = () => {
   return (
@@ -15,10 +15,10 @@ const AppShell = () => {
           <IonRouterOutlet id="main">
             <Route path="/tabs" render={() => <Tabs />} />
             <Route
-              path="/:lang/news/:id"
-              render={(props) => <Details {...props} language="fr" />}
+              path="/home"
+              render={(props) => <Home {...props} language="fr" />}
             />
-            <Route exact path="/" render={() => <Redirect to="/tabs" />} />
+            <Route exact path="/" render={() => <Redirect to="/home" />} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

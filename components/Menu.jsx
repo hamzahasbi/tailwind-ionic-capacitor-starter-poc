@@ -14,19 +14,19 @@ import {
   IonToggle
 } from '@ionic/react';
 import { useContext, useEffect, useState } from 'react';
-import { cog, flash, list } from 'ionicons/icons';
+import { cog, flash, home } from 'ionicons/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
 const pages = [
   {
+    title: 'Accueil',
+    icon: home,
+    url: '/home',
+  },
+  {
     title: 'Feed',
     icon: flash,
     url: '/tabs/feed',
-  },
-  {
-    title: 'Lists',
-    icon: list,
-    url: '/tabs/lists',
   },
   {
     title: 'Settings',
