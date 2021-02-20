@@ -35,7 +35,7 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
         </p>
 
         <div className="flex items-center justify-between mt-2 mx-6">
-          <a href={`/${langcode}/news/${id}`} className="text-blue-500 text-s ml-20 my-1">{'Lire plus'}</a>
+          <a href={`/tabs/${langcode}/news/${id}`} className="text-blue-500 text-s ml-20 my-1">{'Lire l\'article'}</a>
         </div>
         <div className="flex items-center space-x-4">
           <img src={logo} className="rounded-full w-10 h-10" />

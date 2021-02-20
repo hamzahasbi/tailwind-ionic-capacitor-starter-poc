@@ -10,12 +10,10 @@ import {
   IonItem,
   IonNote,
   IonLabel,
+  IonPopover
 } from '@ionic/react';
-import Store from '../../store';
 import React, {useState} from 'react';
-import { getNotifications } from '../../store/selectors';
-import { Plugins, PushNotification, PushNotificationToken, PushNotificationActionPerformed, Capacitor } from '@capacitor/core';
-const { PushNotifications } = Plugins;
+import { Plugins, Capacitor } from '@capacitor/core';
 import { close } from 'ionicons/icons';
 
 
@@ -30,9 +28,11 @@ const NotificationItem = ({ notification }) => (
   </IonItem>
 );
 
+const { PushNotifications } = Plugins;
 const Notifications = ({ open, onDidDismiss }) => {
 
   const [notifications, setNotifications] = useState([]);
+  const [popoverState, setShowPopover] = useState(false);
 
   if (Capacitor.platform !== 'web') {
     PushNotifications.register();
@@ -52,16 +52,18 @@ const Notifications = ({ open, onDidDismiss }) => {
     // Show us the notification payload if the app is open on our device
     PushNotifications.addListener('pushNotificationReceived',
       (notification) => {
-        alert('Push registration success, token: ' + JSON.stringify(notification));
-        // setNotifications(oldState => oldState.push({ id: notification.id, title: notification.title, body: notification.body }));
+        setShowPopover(true);
+        if(notifications.filter(item => item.id === notification.id).length === 0) {
+          setNotifications(oldState => [].concat(oldState, [{ id: notification.id, title: notification.title, body: notification.body }]));
+        }
       }
     );
-  
     // Method called when tapping on a notification
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification) => {
-        console.log('click')
-        // setNotifications(oldState => oldState.push({ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body }));
+        if(notifications.filter(item => item.id === notification.notification.data.id).length === 0) {
+          setNotifications(oldState => oldState.push(oldState, [{ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body }]));
+        }
       }
     );
   }
@@ -82,6 +84,13 @@ const Notifications = ({ open, onDidDismiss }) => {
             <IonTitle size="large">Notifications</IonTitle>
           </IonToolbar>
         </IonHeader>
+        <IonPopover
+          cssClass='pop-over-notif'
+          isOpen={popoverState}
+          onDidDismiss={() => setShowPopover(false)}
+        >
+          <p>Notifications Reçues</p>
+        </IonPopover>
         <IonList>
           {notifications.length > 0 && notifications.map((notification) => (
             <NotificationItem notification={notification} key={notification.id} />
