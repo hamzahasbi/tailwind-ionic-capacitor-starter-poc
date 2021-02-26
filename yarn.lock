@@ -399,6 +399,13 @@
   resolved "https://registry.npm.taobao.org/@hapi/hoek/download/@hapi/hoek-9.1.1.tgz#9daf5745156fd84b8e9889a2dc721f0c58e894aa"
   integrity sha1-na9XRRVv2EuOmImi3HIfDFjolKo=
 
+"@ionic-native/core@^5.31.1":
+  version "5.31.1"
+  resolved "https://registry.npm.taobao.org/@ionic-native/core/download/@ionic-native/core-5.31.1.tgz#189d67f20b46cfe7930091fa382539efafa8d03b"
+  integrity sha1-GJ1n8gtGz+eTAJH6OCU576+o0Ds=
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic/core@5.5.4":
   version "5.5.4"
   resolved "https://registry.npm.taobao.org/@ionic/core/download/@ionic/core-5.5.4.tgz#7fc586e074e85d446cc595a67e625f77d00d708c"
@@ -549,6 +556,11 @@
   version "2.4.0"
   resolved "https://registry.npm.taobao.org/@stencil/core/download/@stencil/core-2.4.0.tgz#17b45629c8986e35dcbce3f7dab7d64beede83f2"
   integrity sha1-F7RWKciYbjXcvOP32rfWS+7eg/I=
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.npm.taobao.org/@types/cordova/download/@types/cordova-0.0.34.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcordova%2Fdownload%2F%40types%2Fcordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/estree@0.0.39":
   version "0.0.39"
