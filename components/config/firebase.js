@@ -1,8 +1,7 @@
 
 import * as app from '@firebase/app';
-import React from 'react';
 import {firebaseConfig} from './variables.env';
-
+import React from 'react';
 let Firebase;
 
 if (!app.firebase.apps.length) {
