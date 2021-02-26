@@ -13,13 +13,12 @@ const Tabs = () => {
     <IonTabs>
       <IonRouterOutlet>
         <Route path="/tabs/feed" component={Feed} exact={true} />
-        <Route path="/home" component={Home} exact={true} />
         <Route
               path="/tabs/:lang/news/:id"
               render={(props) => <Details {...props} language="fr" />}
             />
         <Route path="/tabs/settings" component={Settings} exact={true} />
-        <Route path="/tabs" render={() => <Redirect to="/tabs/home" />} exact={true} />
+        <Route path="/tabs" render={() => <Redirect to="/home" />} exact={true} />
       </IonRouterOutlet>
       <IonTabBar slot="bottom">
         <IonTabButton tab="tab1" href="/home">
