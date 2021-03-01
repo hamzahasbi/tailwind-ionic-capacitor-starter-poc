@@ -38,10 +38,9 @@ const SimpleDeepLinkHandler = () => {
     App.addListener('appUrlOpen', (data) => {
       // Example url: https://beerswift.app/tabs/tab2
       // slug = /tabs/tab2
-      const slug = data.url.split('host').pop();
+      const slug = data.url.split(host).pop();
       console.log(data);
       if (slug) {
-        console.log(slug);
         history.push(slug);
       }
       // If no match, do nothing - let regular routing
@@ -62,11 +61,7 @@ const AppShell = () => {
           <Menu />
           <IonRouterOutlet id="main">
             <Route path="/tabs" render={() => <Tabs />} />
-            <Route
-              path="/home"
-              render={(props) => <Home {...props} language="fr" />}
-            />
-            <Route exact path="/" render={() => <Redirect to="/home" />} />
+            <Route exact path="/" render={() => <Redirect to="/tabs" />} />
           </IonRouterOutlet>
         </IonSplitPane>
       </IonReactRouter>

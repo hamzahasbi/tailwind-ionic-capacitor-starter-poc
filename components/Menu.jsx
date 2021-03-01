@@ -21,7 +21,7 @@ const pages = [
   {
     title: 'Accueil',
     icon: home,
-    url: '/home',
+    url: '/tabs/home',
   },
   {
     title: 'Feed',
@@ -74,7 +74,7 @@ const Menu = () => {
         <IonList>
           {pages.map((p, index) => (
             <IonMenuToggle key={index} autoHide={false}>
-              <IonItem routerLink={p.url} routerDirection="none" detail={false} lines="none">
+              <IonItem routerLink={p.url} routerDirection="root" detail={false} lines="none">
                 <IonIcon icon={p.icon} slot="start" />
                 <IonLabel>{p.title}</IonLabel>
               </IonItem>

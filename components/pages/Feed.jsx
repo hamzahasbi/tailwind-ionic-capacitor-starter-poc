@@ -35,7 +35,7 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
         </p>
 
         <div className="flex items-center justify-between mt-2 mx-6">
-          <a href={`/tabs/${langcode}/news/${id}`} className="text-blue-500 text-s ml-20 my-1">{'Lire l\'article'}</a>
+          <IonButton routerLink={`/tabs/${langcode}/news/${id}`} shape="round" fill="outline" className="dark:text-gray-100 text-s ml-12">{'Lire l\'article'}</IonButton>
         </div>
         <div className="flex items-center space-x-4">
           <img src={logo} className="rounded-full w-10 h-10" />
@@ -75,6 +75,7 @@ const Feed = () => {
     setPageNumber(0);
     setSelectedTerm(tid);
   }
+
   useIonViewWillEnter(() => {
     getThematique(currentLanguage)
       .then(data => {
@@ -84,7 +85,12 @@ const Feed = () => {
             id: el.drupal_internal__tid,
           };
         });
-        setFilters(filters => [].concat(filters, terms));
+        setFilters([].concat([
+          {
+            id: 'all',
+            name: 'Toutes',
+          },
+        ], terms));
       })
       .catch(e => {
         console.log(e);
@@ -110,6 +116,8 @@ const Feed = () => {
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedTerm, offset]);
+
+  
   return (
     <IonPage>
       <IonHeader>
