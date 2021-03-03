@@ -1,5 +1,5 @@
 {
-  "appId": "com.example.app",
+  "appId": "com.void.voidinsights",
   "appName": "void-insights",
   "bundledWebRuntime": false,
   "npmClient": "yarn",

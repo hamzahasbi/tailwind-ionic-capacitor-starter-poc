@@ -11,10 +11,12 @@ import {
   IonContent,
   IonMenuButton,
   useIonViewWillEnter,
+  IonFab,
+  IonFabButton
 } from '@ionic/react';
 import Notifications from './Notifications';
-import { useState, useEffect } from 'react';
-import { notificationsOutline } from 'ionicons/icons';
+import { useState, useEffect, useRef } from 'react';
+import { notificationsOutline, arrowUpOutline } from 'ionicons/icons';
 import {getNewsNodes, getThematique} from '../config/articles';
 import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
 import Loader from '../Loader/Loader';
@@ -61,7 +63,10 @@ const Feed = () => {
       name: 'Toutes',
     },
   ]);
-
+  const contentRef = useRef(null);
+  const scrollToTop= () => {
+      contentRef.current && contentRef.current.scrollToTop(300);
+  };
   const handleScroll = () => {
     const selected = pageNumber + 1;
     const newOffset = Math.ceil(selected * 4);
@@ -133,7 +138,12 @@ const Feed = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent className="ion-padding" fullscreen>
+      <IonContent className="ion-padding" ref={contentRef} fullscreen scrollEvents={true}>
+        <IonFab vertical="top" horizontal="end" slot="fixed">
+          <IonFabButton fill="outline" onClick={()=>scrollToTop()}>      
+            <IonIcon icon={arrowUpOutline} />
+          </IonFabButton>
+        </IonFab>
         <IonHeader collapse="condense">
           <IonToolbar>
             <IonTitle size="large">Feed</IonTitle>

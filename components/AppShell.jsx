@@ -5,9 +5,7 @@ import {Plugins} from '@capacitor/core';
 import {useEffect} from 'react';
 import Menu from './Menu';
 import Tabs from './pages/Tabs';
-import Home from './pages/Home';
-import Feed from './pages/Feed';
-import Details from './pages/Details';
+import { useIonRouter } from '@ionic/react';
 
 const { App } = Plugins;
 const host = process.env.NEXT_PUBLIC_HOST;
@@ -32,7 +30,17 @@ const host = process.env.NEXT_PUBLIC_HOST;
 //   return null;
 // };
 
+
 const SimpleDeepLinkHandler = () => {
+
+  const ionRouter = useIonRouter();
+  document.addEventListener('ionBackButton', (ev) => {
+    ev.detail.register(-1, () => {
+      if (!ionRouter.canGoBack()) {
+        App.exitApp();
+      }
+    });
+  });
   let history = useHistory();
   useEffect(() => {
     App.addListener('appUrlOpen', (data) => {

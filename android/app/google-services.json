@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "411223896940",
+    "project_id": "void-insights",
+    "storage_bucket": "void-insights.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:411223896940:android:e0288e693f295d100fb949",
+        "android_client_info": {
+          "package_name": "com.void.voidinsights"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "411223896940-gc0sfddp8cf168ahuvjnfr6adbdgqdv8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBS8xdYhjkgldrGK9_IDnrUmhpM22JwBHU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "411223896940-gc0sfddp8cf168ahuvjnfr6adbdgqdv8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

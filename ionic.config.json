@@ -1,0 +1,7 @@
+{
+  "name": "void insights",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
