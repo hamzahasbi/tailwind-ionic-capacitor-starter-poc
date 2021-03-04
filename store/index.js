@@ -8,9 +8,11 @@ const Store = new PullStateStore({
   menuOpen: false,
   notificationsOpen: false,
   currentPage: null,
+  isDarkMode: false,
   homeItems,
+  favoris: [],
   lists,
-  notifications,
+  notifications: [],
   settings: {
     enableNotifications: true,
   },

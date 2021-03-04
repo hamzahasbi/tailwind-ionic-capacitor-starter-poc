@@ -15,7 +15,9 @@ import {
 import React, {useState} from 'react';
 import { Plugins, Capacitor } from '@capacitor/core';
 import { close } from 'ionicons/icons';
-
+import Store from '../../store';
+import * as selectors from '../../store/selectors';
+import {setNotifications, removeNotifications} from "../../store/actions";
 
 const NotificationItem = ({ notification }) => (
   
@@ -31,9 +33,13 @@ const NotificationItem = ({ notification }) => (
 const { PushNotifications } = Plugins;
 const Notifications = ({ open, onDidDismiss }) => {
 
-  const [notifications, setNotifications] = useState([]);
+  const notifications = Store.useState(selectors.getNotifications);
   const [popoverState, setShowPopover] = useState(false);
 
+  const handleClose = () => {
+    removeNotifications();
+    onDidDismiss;
+  }
   if (Capacitor.platform !== 'web') {
     PushNotifications.register();
     // PushNotifications.addListener('registration',
@@ -54,7 +60,7 @@ const Notifications = ({ open, onDidDismiss }) => {
       (notification) => {
         setShowPopover(true);
         if(notifications.filter(item => item.id === notification.id).length === 0) {
-          setNotifications(oldState => [].concat(oldState, [{ id: notification.id, title: notification.title, body: notification.body }]));
+          setNotifications({ id: notification.id, title: notification.title, body: notification.body });
         }
       }
     );
@@ -62,14 +68,14 @@ const Notifications = ({ open, onDidDismiss }) => {
     PushNotifications.addListener('pushNotificationActionPerformed',
       (notification) => {
         if(notifications.filter(item => item.id === notification.notification.data.id).length === 0) {
-          setNotifications(oldState => oldState.push(oldState, [{ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body }]));
+          setNotifications({ id: notification.notification.data.id, title: notification.notification.data.title, body: notification.notification.data.body });
         }
       }
     );
   }
 
   return (
-    <IonModal isOpen={open} onDidDismiss={onDidDismiss}>
+    <IonModal isOpen={open} onDidDismiss={handleClose}>
       <IonHeader>
         <IonToolbar>
           <IonTitle>Notifications</IonTitle>

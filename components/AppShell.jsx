@@ -7,6 +7,7 @@ import Menu from './Menu';
 import Tabs from './pages/Tabs';
 import { useIonRouter } from '@ionic/react';
 
+
 const { App } = Plugins;
 const host = process.env.NEXT_PUBLIC_HOST;
 
@@ -63,7 +64,6 @@ const AppShell = () => {
   return (
     <IonApp>
       <IonReactRouter>
-      {/* <DeepLinkHandler/> */}
       <SimpleDeepLinkHandler/>
         <IonSplitPane contentId="main">
           <Menu />
