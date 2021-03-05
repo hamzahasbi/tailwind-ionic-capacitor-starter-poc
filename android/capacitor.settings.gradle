@@ -4,3 +4,6 @@ project(':capacitor-android').projectDir = new File('../node_modules/@capacitor/
 
 include ':capacitor-dark-mode'
 project(':capacitor-dark-mode').projectDir = new File('../node_modules/capacitor-dark-mode/android')
+
+include ':fancy-notifications'
+project(':fancy-notifications').projectDir = new File('../node_modules/fancy-notifications/android/fancy-notifications')
