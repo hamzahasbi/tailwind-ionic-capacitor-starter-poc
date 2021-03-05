@@ -20,22 +20,21 @@ import { useState, useRef } from 'react';
 import { notificationsOutline, arrowUpOutline, heartDislikeSharp, reader, alertCircleSharp } from 'ionicons/icons';
 import Store from '../../store';
 import * as selectors from '../../store/selectors';
-import {removeFromFavoris} from '../../store/actions';
 
 const EmptyPage = () => {
   return (
-    <div class="flex justify-center my-14 align-text-middle items-center">
-      <div class="rounded-lg">
-        <div class="w-96 border-t-8 rounded-lg flex">
-          <div class="w-1/3 pt-6 flex justify-center">
+    <div className="flex justify-center my-14 align-text-middle items-center">
+      <div className="rounded-lg">
+        <div className="w-96 border-t-8 rounded-lg flex">
+          <div className="w-1/3 pt-6 flex justify-center">
             <IonIcon icon={alertCircleSharp} size="large"></IonIcon>
           </div>
-          <div class="w-full py-9 pr-4">
-            <h3 class="font-bold text-lg">Liste Vide?</h3>
-            <p class="py-4 text-lg text-gray-400">Vous pouvez remplir votre liste des favoris à partir de notre sélection d'articles !</p>
+          <div className="w-full py-9 pr-4">
+            <h3 className="font-bold text-lg">Liste vide?</h3>
+            <p className="py-4 text-lg text-gray-400">Vous pouvez remplir votre liste des favoris à partir de notre sélection d'articles !</p>
           </div>
         </div>
-        <IonButton routerLink={`/tabs/feed`} expand="full" shape="round" strong="true" fill="solid" className="dark:text-gray-100 text-s">
+        <IonButton routerLink={`/tabs/feed`} shape="round" fill="solid" color="light" className="mx-24 dark:text-gray-100 text-s">
             <IonIcon icon={reader} slot="start"></IonIcon> {'Articles'}
           </IonButton>
       </div>
@@ -45,7 +44,7 @@ const EmptyPage = () => {
 }
 const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id }) => {
   return (
-    <Card className="my-4 mx-auto">
+    <Card routerLink={`/tabs/${langcode}/news/${id}`} className="my-4 mx-auto">
       <div>
         <img loading="lazy" className="rounded-t-xl h-32 w-full object-cover" src={image} />
       </div>
@@ -56,14 +55,6 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
           {excerpt}
         </p>
 
-        <div className="flex items-center justify-between my-2 mx-4">
-          <IonButton routerLink={`/tabs/${langcode}/news/${id}`} shape="round" fill="outline" className="dark:text-gray-100 text-s">
-            <IonIcon icon={reader} slot="start"></IonIcon> {'Lire plus'}
-          </IonButton>
-          <IonButton shape="round" fill="outline" className="dark:text-gray-100 text-s" onClick={() => removeFromFavoris(id)}>
-          <IonIcon icon={heartDislikeSharp} slot="start"></IonIcon>{'Unstar'}
-          </IonButton>
-        </div>
         <div className="flex items-center space-x-4 mt-3">
           <img src={logo} className="rounded-full w-10 h-10" />
           <h3 className="text-gray-500 dark:text-gray-200 m-l-8 text-sm font-medium">{author}</h3>
@@ -76,6 +67,7 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
 const Favoris = () => {
   const [showNotifications, setShowNotifications] = useState(false);
   const items = Store.useState(selectors.getFavoris);
+  const notifications = Store.useState(selectors.getNotifications);
   const contentRef = useRef(null);
   const scrollToTop= () => {
       contentRef.current && contentRef.current.scrollToTop(300);
@@ -90,8 +82,11 @@ const Favoris = () => {
             <IonMenuButton />
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notificationsOutline} />
+            <IonButton  onClick={() => setShowNotifications(true)}>
+              <span className="badge rounded-full px-2 py-1 text-center object-right-top text-sm mr-1"> 
+                <IonIcon icon={notificationsOutline}  slot="start"/> 
+                {notifications.length}
+                </span>
             </IonButton>
           </IonButtons>
         </IonToolbar>

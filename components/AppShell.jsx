@@ -7,7 +7,6 @@ import Menu from './Menu';
 import Tabs from './pages/Tabs';
 import { useIonRouter } from '@ionic/react';
 
-
 const { App } = Plugins;
 const host = process.env.NEXT_PUBLIC_HOST;
 
@@ -28,11 +27,10 @@ const host = process.env.NEXT_PUBLIC_HOST;
 //     });
 //   }
   
-//   return null;
-// };
 
 
 const SimpleDeepLinkHandler = () => {
+  
 
   const ionRouter = useIonRouter();
   document.addEventListener('ionBackButton', (ev) => {
@@ -42,13 +40,13 @@ const SimpleDeepLinkHandler = () => {
       }
     });
   });
+
   let history = useHistory();
   useEffect(() => {
     App.addListener('appUrlOpen', (data) => {
       // Example url: https://beerswift.app/tabs/tab2
       // slug = /tabs/tab2
       const slug = data.url.split(host).pop();
-      console.log(data);
       if (slug) {
         history.push(slug);
       }
@@ -59,6 +57,7 @@ const SimpleDeepLinkHandler = () => {
 
   return null;
 };
+
 
 const AppShell = () => {
   return (

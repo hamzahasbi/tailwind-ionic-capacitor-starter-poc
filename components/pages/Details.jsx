@@ -1,4 +1,4 @@
-import {Article} from '../ui/Article';
+import {Article, ArticleV2} from '../ui/Article';
 import {normalizer} from '../config/articles';
 import {
   IonPage,
@@ -17,15 +17,19 @@ import { useState, useEffect } from 'react';
 import { notificationsOutline } from 'ionicons/icons';
 import {getNewsById} from '../config/articles';
 import Loader from '../Loader/Loader';
+import Store from '../../store';
+import * as selectors from '../../store/selectors';
+
 
 const Details = ({match}) => {
     const [showNotifications, setShowNotifications] = useState(false);
     const [item, setItem] = useState({});
     const { lang, id } = match.params;
     const [isLoading, setIsLoading] = useState(true);
-  
+    const notifications = Store.useState(selectors.getNotifications);
 
-    useIonViewWillEnter(() => {
+
+    useEffect(() => {
         getNewsById(id, lang)
         .then(res => {
           const data = normalizer(res.data);
@@ -35,7 +39,7 @@ const Details = ({match}) => {
         .catch(e => {
           console.log(e);
         });
-    });
+    }, [id]);
 
     return (
         <IonPage>
@@ -46,8 +50,11 @@ const Details = ({match}) => {
                     <IonMenuButton />
                 </IonButtons>
                 <IonButtons slot="end">
-                    <IonButton onClick={() => setShowNotifications(true)}>
-                    <IonIcon icon={notificationsOutline} />
+                    <IonButton  onClick={() => setShowNotifications(true)}>
+                        <span className="badge rounded-full px-2 py-1 text-center object-right-top text-sm mr-1"> 
+                            <IonIcon icon={notificationsOutline}  slot="start"/> 
+                            {notifications.length}
+                        </span>
                     </IonButton>
                 </IonButtons>
                 </IonToolbar>
@@ -68,7 +75,7 @@ const Details = ({match}) => {
                 />
                 }
                 {
-                    !isLoading && <Article {...item}/>
+                    !isLoading && <ArticleV2 {...item}/>
                 }
             </IonContent>
         </IonPage>

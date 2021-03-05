@@ -126,6 +126,13 @@
   dependencies:
     tslib "^1.9.0"
 
+"@capacitor/core@latest":
+  version "2.4.7"
+  resolved "https://registry.npm.taobao.org/@capacitor/core/download/@capacitor/core-2.4.7.tgz#f3b4d5728db7e764c1153da5e67d369bda35b772"
+  integrity sha1-87TVco2352TBFT2l5n02m9o1t3I=
+  dependencies:
+    tslib "^1.9.0"
+
 "@capacitor/ios@^2.4.5":
   version "2.4.6"
   resolved "https://registry.npm.taobao.org/@capacitor/ios/download/@capacitor/ios-2.4.6.tgz#b46912d7feb3e416a91e20bdba3c7a9a82048cd0"
@@ -2259,6 +2266,13 @@ extglob@^2.0.4:
     regex-not "^1.0.0"
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
+
+fancy-notifications@^0.0.2:
+  version "0.0.2"
+  resolved "https://registry.npm.taobao.org/fancy-notifications/download/fancy-notifications-0.0.2.tgz#123d34dd744cb6fca8778e61ec1ab82841ce4512"
+  integrity sha1-Ej003XRMtvyod45h7Bq4KEHORRI=
+  dependencies:
+    "@capacitor/core" latest
 
 fast-deep-equal@^3.1.1, fast-deep-equal@^3.1.3:
   version "3.1.3"

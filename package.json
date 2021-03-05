@@ -21,6 +21,7 @@
     "classnames": "^2.2.6",
     "cordova-res": "^0.15.3",
     "dayjs": "^1.10.4",
+    "fancy-notifications": "^0.0.2",
     "firebase": "^8.2.7",
     "kitsu": "^10.0.0-alpha.10",
     "lodash.get": "^4.4.2",

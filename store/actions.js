@@ -14,7 +14,11 @@ export const setNotificationsOpen = open => {
 
 export const setNotifications = item => {
   Store.update((s, old) => {
-    s.notifications = [].concat(old.notifications, item);
+    const merge = [].concat(old.notifications, item);
+    s.notifications = merge.reduce((a, b) => {
+      if (a.findIndex((el) => el.id === b.id) == -1) a.push(b);
+      return a;
+    }, []);
   });
 };
 

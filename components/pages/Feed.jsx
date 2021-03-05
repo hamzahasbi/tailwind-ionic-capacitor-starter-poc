@@ -3,6 +3,7 @@ import {normalizer} from '../config/articles';
 import {
   IonPage,
   IonHeader,
+  IonLabel,
   IonToolbar,
   IonTitle,
   IonButtons,
@@ -22,40 +23,32 @@ import InfiniteScroll from '../InfiniteScroll/InfiniteScroll';
 import Loader from '../Loader/Loader';
 import {SelectFilters} from '../Filters/select';
 import {setFavoris, setNotifications} from '../../store/actions';
-import {getFavoris, getSettings} from '../../store/selectors';
+import {getFavoris, getSettings, getNotifications} from '../../store/selectors';
 import Store from '../../store';
 import { Plugins } from '@capacitor/core';
+import 'fancy-notifications';
 
-const { LocalNotifications } = Plugins;
 
-const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id }) => {
+const { LocalNotifications, FancyNotifications } = Plugins;
 
-  const settings = Store.useState(getSettings);
-  const favoris = Store.useState(getFavoris);
-  const handleFavorite = async () => {
-    setFavoris({ title, category, excerpt, author, logo, image, langcode, id });
-    if (settings.enableNotifications) {
-      setNotifications({ id: id, title: "Article ajouté au favoris", body: `l'article "${title}" a été ajouté à votre liste des favoris!` });
-      const notifs = await LocalNotifications.schedule({
-        notifications: [
-          {
-            title: "Article ajouté au favoris",
-            body: `l'article ${title} a été ajouté à votre liste des favoris!`,
-            schedule: { at: new Date(Date.now() + 1000) },
-            sound: null,
-            attachments: null,
-            actionTypeId: "",
-            extra: null
-          }
-        ]
-      });
+const updateBadgeCount = async (count) => {
+  const check = await FancyNotifications.hasPermission();
+  if (check.value){
+    if (count === 0) await FancyNotifications.clearBadgeCount();
+    else await FancyNotifications.setBadgeCount({ count });
+  } else {
+    const request = await FancyNotifications.requestPermission();
+    if (request.value){
+      if (count === 0) await FancyNotifications.clearBadgeCount();
+      else await FancyNotifications.setBadgeCount({count});
     }
   }
-
+}
+const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id }) => {
 
 
   return (
-    <Card className="my-4 mx-auto">
+    <Card routerLink={`/tabs/${langcode}/news/${id}`} className="my-4 mx-auto">
       <div>
         <img loading="lazy" className="rounded-t-xl h-32 w-full object-cover" src={image} />
       </div>
@@ -66,15 +59,6 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
           {excerpt}
         </p>
 
-        <div className="flex items-center justify-between my-2 mx-4">
-          <IonButton routerLink={`/tabs/${langcode}/news/${id}`} shape="round" fill="outline" className="dark:text-gray-100 text-s">
-            <IonIcon icon={reader} slot="start"></IonIcon> {'Lire plus'}
-          </IonButton>
-          <IonButton disabled={favoris.findIndex((el) => el.id === id) !== -1} shape="round" fill="outline" className="dark:text-gray-100 text-s" onClick={() => handleFavorite()}>
-            <IonIcon icon={starOutline} slot="start"></IonIcon>{'Favoris'}
-          </IonButton>
-
-        </div>
         <div className="flex items-center space-x-4 mt-3">
           <img src={logo} className="rounded-full w-10 h-10" />
           <h3 className="text-gray-500 dark:text-gray-200 m-l-8 text-sm font-medium">{author}</h3>
@@ -85,7 +69,9 @@ const FeedCard = ({ title, category, excerpt, author, logo, image, langcode, id 
 };
 
 const Feed = () => {
+
   const [showNotifications, setShowNotifications] = useState(false);
+  const notifications = Store.useState(getNotifications);
   const [items, setItems] = useState([]);
   const [selectedTerm, setSelectedTerm] = useState('all');
   const [offset, setOffset] = useState(0);
@@ -168,8 +154,11 @@ const Feed = () => {
             <IonMenuButton />
           </IonButtons>
           <IonButtons slot="end">
-            <IonButton onClick={() => setShowNotifications(true)}>
-              <IonIcon icon={notificationsOutline} />
+            <IonButton  onClick={() => setShowNotifications(true)}>
+              <span className="badge rounded-full px-2 py-1 text-center object-right-top text-sm mr-1"> 
+                <IonIcon icon={notificationsOutline}  slot="start"/> 
+                {notifications.length}
+                </span>
             </IonButton>
           </IonButtons>
         </IonToolbar>

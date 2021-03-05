@@ -14,7 +14,7 @@ import {
 } from '@ionic/react';
 import React, {useState} from 'react';
 import { Plugins, Capacitor } from '@capacitor/core';
-import { close } from 'ionicons/icons';
+import { close, checkmarkDoneOutline } from 'ionicons/icons';
 import Store from '../../store';
 import * as selectors from '../../store/selectors';
 import {setNotifications, removeNotifications} from "../../store/actions";
@@ -22,11 +22,10 @@ import {setNotifications, removeNotifications} from "../../store/actions";
 const NotificationItem = ({ notification }) => (
   
   <IonItem>
+    <IonIcon icon={checkmarkDoneOutline} slot="start"/>
     <IonLabel>{notification.title}</IonLabel>
     <IonNote slot="end">{notification.body}</IonNote>
-    <IonButton slot="end" fill="clear" color="dark">
-      <IonIcon icon={close} />
-    </IonButton>
+
   </IonItem>
 );
 
@@ -91,7 +90,7 @@ const Notifications = ({ open, onDidDismiss }) => {
           </IonToolbar>
         </IonHeader>
         <IonPopover
-          cssClass='pop-over-notif'
+          cssclassName='pop-over-notif'
           isOpen={popoverState}
           onDidDismiss={() => setShowPopover(false)}
         >

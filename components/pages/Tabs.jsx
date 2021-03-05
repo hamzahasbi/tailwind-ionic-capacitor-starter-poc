@@ -20,7 +20,8 @@ const Tabs = () => {
         <Route
               path="/tabs/:lang/news/:id"
               render={(props) => <Details {...props} language="fr" />}
-            />
+        />
+
         <Route path="/tabs/settings" component={Settings} exact={true} />
         <Route path="/tabs/favoris" component={Favoris} exact={true} />
         <Route path="/tabs" render={() => <Redirect to="/tabs/home" />} exact={true} />

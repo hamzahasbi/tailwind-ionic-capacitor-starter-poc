@@ -27,7 +27,7 @@ const Settings = () => {
       <IonContent>
         <IonList>
           <IonItem>
-            <IonLabel>Enable Notifications</IonLabel>
+            <IonLabel>Activer les notifications</IonLabel>
             <IonToggle
               checked={settings.enableNotifications}
               onIonChange={e => {
